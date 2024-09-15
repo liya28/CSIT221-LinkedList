@@ -1,0 +1,157 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node *next;
+    Node (int value) : data(value), next(nullptr) {}
+};
+
+class LinkedList
+{
+    private:
+        Node *head1;
+        Node *head2;
+    public:
+        LinkedList() : head1(nullptr), head2(nullptr) {}
+        
+        ~LinkedList()
+        {
+            clearList(head1);
+            clearList(head2);
+        }
+
+        void clearList(Node *&head)
+        {
+            Node *current = head;
+            while (current != NULL)
+            {
+                Node *nextNode = current->next;
+                delete current;
+                current = nextNode;
+            }
+            head = nullptr;
+        }
+        
+        void addNode(int data, bool listNum)
+        {
+            Node *&head = (listNum) ? head1 : head2;
+            Node *newNode = new Node(data);
+            
+            if (head == nullptr)
+            {
+                head = newNode;
+            }
+            else
+            {
+                Node *currentNode = head;
+                while (currentNode->next != nullptr)
+                {
+                    currentNode = currentNode->next;
+                }
+                currentNode->next = newNode;
+            }
+        }
+        
+        void printList(bool listNum)
+        {
+            Node *head = (listNum) ? head1 : head2;
+            Node *currentNode = head;
+            while (currentNode != nullptr)
+            {
+                cout << currentNode->data << " ";
+                currentNode = currentNode->next;
+            }
+            cout << endl;
+        }
+        
+        void concatenateLists()
+        {
+            if (head1 == nullptr)
+            {
+                head1 = head2;
+                return;
+            }
+            Node *current = head1;
+            while (current->next != nullptr)
+            {
+                current = current->next;
+            }
+            current->next = head2;
+        }
+
+        void insertNode(int data)
+        {
+            Node *newNode = new Node(data);
+            if (head1 == nullptr) 
+            {
+                head1 = newNode;
+                return;
+            }
+
+            int evenCount = 0;
+            Node *current = head1;
+
+            while (current != nullptr)
+            {
+                if (current->data % 2 == 0)
+                {
+                    evenCount++;
+                    if (evenCount == 2)
+                    {
+                        newNode->next = current->next;
+                        current->next = newNode;
+                        return;
+                    }
+                }
+                
+                current = current->next;
+            }
+
+            addNode(data, 1);
+        }
+};
+
+int main()
+{
+    LinkedList myList;
+    
+    int size;
+    cout << "Enter elements of the list: ";
+    cin >> size;
+    
+    int data;
+    cout << "List 1:" << endl;
+    for (int i = 0; i < size; i++)
+    {
+        cout << "Enter element: ";
+        cin >> data;
+        myList.addNode(data, 1);
+    }
+
+    // cout << "List 2:" << endl;
+    // for (int i = 0; i < size; i++)
+    // {
+    //     cout << "Enter element: ";
+    //     cin >> data;
+    //     myList.addNode(data, 0);
+    // }
+
+    cout << "Enter data to insert: ";
+    cin >> data;
+    
+    cout << "Original list 1: ";
+    myList.printList(1);
+
+    // cout << "Original list 2: ";
+    // myList.printList(0);
+    
+    myList.insertNode(data);
+    
+    cout << "New list: ";
+    myList.printList(1);
+    
+    return 0;
+}
