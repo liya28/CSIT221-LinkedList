@@ -1,0 +1,66 @@
+Doubly Linked List Operations Pseudocode
+
+class DList
+{
+public:
+virtual void addNodeAtBeg(int num) = 0;
+1. Create a new node
+2. If there's no head yet, assign new node to the head and tail. Increase size and return.
+3. Else, set the new node's next to the head and set the current head's prev to the new node. Then, assign the new node as the new head. Increase size and return.
+
+virtual void addNodeAtEnd(int num) = 0;
+1. Create a new node
+2. If there's no head yet, call addNodeAtBeg()
+3. Else, set the next of the current tail to the new node and set the prev of the new node to the current tail. Then, assign the new node as the new tail. Increase size and return.
+
+virtual int removeFirst() = 0;
+Assuming that a head is present...
+1. Store the current head to the "to_delete" variable.
+2. Store the current head's element to an int variable.
+3. If the head != tail, set the head's next as the new head and set the new head's prev to NULL.
+4. Else, nullify the head and tail. 
+5. Decrease the size
+6. Return the element.
+
+virtual int removeLast() = 0;
+Assuming that a head is present...
+1. Store the current tail to the "to_delete" variable.
+2. Store the current tail's element to an int variable.
+3. Set the tail's prev as the new tail. 
+4. Set the next of the new tail to NULL.
+5. Decrease the size and return the element.
+
+
+virtual void insertAtPos(int num, int pos) = 0; 
+1. Create the new node;
+If there is no head yet, call addAtFirst(num);
+Else...
+2. Initialize an i.
+3. Declare a current node variable.
+4. Through for loop, traverse the list until you reached the < pos position. That will become the prev of your new node.
+5. Set the new node's prev to the current.
+6. Set the new node's next to the current's next.
+7. Set the current's next to the new node.
+8. Increase size and return.
+
+virtual void removeAtPos(int pos) = 0;
+1. If there is no head, cout List is empty then return.
+2. If the head == pos, call removeFirst()
+3. If the tail == pos, call removeLast()
+Else...
+4. Initialize an i = 2
+5. Declare a to be deleted node.
+6. Declare a current node variable set to the head.
+7. Declare an int variable.
+8. Through for loop, traverse the list until you reached the < pos position. That will become the prev of the next of the to be deleted node.
+9. Place the current's next to the to_delete node.
+10. Place the to_delete node's value to the int variable.
+11. Set the current's next to the to_delete node's next.
+12. Set the prev of the to_delete node's next to the current.
+11. Delete to_delete
+12. Decrease the size
+13. Return the element.  
+
+virtual void reverse() = 0;
+virtual int getSize() = 0;		
+};
