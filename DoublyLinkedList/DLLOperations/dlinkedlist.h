@@ -200,35 +200,35 @@ class DLinkedList : public DList
 		        Node* current = head;
 		
 		        while (current != nullptr) 
-				{
+			{
 		            if (current->elem == num) 
-					{
+			    {
 		                if (current == head) 
-						{
+				{
 		                    head = current->next;
 		                    if (head != nullptr) 
-							{
+				    {
 		                        head->prev = nullptr;
 		                    } 
-							else 
-							{
+				    else 
+				     {
 		                        tail = nullptr;
 		                    }
 		                } 
 		                else if (current == tail) 
-						{
+				{
 		                    tail = current->prev;
 		                    if (tail != nullptr) 
-							{
+				    {
 		                        tail->next = nullptr;
 		                    } 
-							else 
-							{
+				    else 
+				    {
 		                        head = nullptr;
 		                    }
 		                } 
 		                else 
-						{
+				{
 		                    current->prev->next = current->next;
 		                    current->next->prev = current->prev;
 		                }
