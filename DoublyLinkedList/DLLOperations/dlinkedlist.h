@@ -194,7 +194,44 @@ class DLinkedList : public DList
 			 size--;
 			 return n;
 		}
-		
+
+		int remove(int num)
+		{
+			Node *current = head;
+			while (current)
+			{
+				if (current->elem == num)
+				{
+					int removed_element = current->elem;
+					if (current == head)
+					{
+						head = head->next;
+						if (head) // double check in case the first element is the last element also
+						{
+							head->prev = NULL;
+						}
+					}
+					else if (current == tail)
+					{
+						tail = tail->prev;
+						if (tail) // double check in case the last element is the first element also
+						{
+							tail->next = NULL;
+						}
+					}
+					else
+					{
+						current->prev->next = current->next;
+						current->next->prev = current->prev;
+					}
+				}
+				delete current;
+				size--;
+				return removed_element;
+			}
+			cout << "Number " << num << " not found.\n";
+			return -1;
+		}
 		int removeAll(int num)
 		{
 			if (!head)
@@ -244,6 +281,15 @@ class DLinkedList : public DList
 				}
 			}
 			return count;
+
+			/* when the removeAll utilizes a remove() and not a removeAtPos()
+   			int count = 0;
+	  		while (remove(num) != -1)
+	 		{
+				count++;
+			}
+   			return count;
+			*/
 		}
 		
 		void reverse() 
