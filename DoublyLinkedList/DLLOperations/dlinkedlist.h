@@ -198,40 +198,45 @@ class DLinkedList : public DList
 		int remove(int num)
 		{
 			Node *current = head;
+			
 			while (current)
 			{
 				if (current->elem == num)
 				{
-					int removed_element = current->elem;
+					int removed_value = current->elem;
+					
 					if (current == head)
 					{
 						head = head->next;
-						if (head) // double check in case the first element is the last element also
+						if (head)
 						{
 							head->prev = NULL;
 						}
-					}
-					else if (current == tail)
-					{
-						tail = tail->prev;
-						if (tail) // double check in case the last element is the first element also
+						
+						else if (current == tail)
 						{
-							tail->next = NULL;
+							tail = tail->prev;
+							if (tail)
+							{
+								tail = tail->next = NULL;
+							}
+						}
+						else 
+						{
+							current->prev->next = current->next;
+							current->next->prev = current->prev;
 						}
 					}
-					else
-					{
-						current->prev->next = current->next;
-						current->next->prev = current->prev;
-					}
+					delete current;
+					size--;
+					return removed_value;
 				}
-				delete current;
-				size--;
-				return removed_element;
+				current = current->next;
 			}
 			cout << "Number " << num << " not found.\n";
 			return -1;
 		}
+
 		int removeAll(int num)
 		{
 			if (!head)
