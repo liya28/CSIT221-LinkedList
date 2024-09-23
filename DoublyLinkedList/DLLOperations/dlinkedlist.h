@@ -194,46 +194,52 @@ class DLinkedList : public DList
 			 size--;
 			 return n;
 		}
-
-		int remove(int num)
+		
+		int remove(int num) 
 		{
-			Node *current = head;
-			
-			while (current)
-			{
-				if (current->elem == num)
+		        Node* current = head;
+		
+		        while (current != nullptr) 
 				{
-					int removed_value = current->elem;
-					
-					if (current == head)
+		            if (current->elem == num) 
 					{
-						head = head->next;
-						if (head)
+		                if (current == head) 
 						{
-							head->prev = NULL;
-						}
-						
-						else if (current == tail)
-						{
-							tail = tail->prev;
-							if (tail)
+		                    head = current->next;
+		                    if (head != nullptr) 
 							{
-								tail = tail->next = NULL;
-							}
-						}
-						else 
+		                        head->prev = nullptr;
+		                    } 
+							else 
+							{
+		                        tail = nullptr;
+		                    }
+		                } 
+		                else if (current == tail) 
 						{
-							current->prev->next = current->next;
-							current->next->prev = current->prev;
-						}
-					}
-					delete current;
-					size--;
-					return removed_value;
-				}
-				current = current->next;
-			}
-			cout << "Number " << num << " not found.\n";
+		                    tail = current->prev;
+		                    if (tail != nullptr) 
+							{
+		                        tail->next = nullptr;
+		                    } 
+							else 
+							{
+		                        head = nullptr;
+		                    }
+		                } 
+		                else 
+						{
+		                    current->prev->next = current->next;
+		                    current->next->prev = current->prev;
+		                }
+		
+		                delete current;
+		                cout << "Number " << num << " removed.\n";
+		                return 0;
+		        }
+		        current = current->next;
+		    }
+		    cout << "Number " << num << " not found.\n";
 			return -1;
 		}
 
